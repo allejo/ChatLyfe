@@ -29,6 +29,7 @@
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
+        "phpunit/phpunit": "~4.8.36",
         "sensio/generator-bundle": "~3.0",
         "symfony/phpunit-bridge": "~2.7"
     },
@@ -46,6 +47,11 @@
         ],
         "post-update-cmd": [
             "@symfony-scripts"
+        ],
+        "test": [
+            "app/console doctrine:database:create --env=test",
+            "app/console doctrine:schema:update --force --env=test",
+            "phpunit"
         ]
     },
     "config": {
