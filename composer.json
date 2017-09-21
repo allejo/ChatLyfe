@@ -48,6 +48,9 @@
         "post-update-cmd": [
             "@symfony-scripts"
         ],
+        "deploy": [
+            "composer install --no-dev --optimize-autoloader"
+        ],
         "test": [
             "app/console doctrine:database:create --env=test",
             "app/console doctrine:schema:update --force --env=test",
