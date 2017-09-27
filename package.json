@@ -1,0 +1,35 @@
+{
+  "name": "chatlyfe",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allejo/ChatLyfe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/allejo/ChatLyfe"
+  },
+  "dependencies": {
+    "eyeglass": "^1.3.0",
+    "eyeglass-sassy-data": "^0.1.3",
+    "gulp": "^3.9.1",
+    "gulp-combine-mq": "^0.4.0",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-postcss": "^7.0.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-util": "^3.0.8",
+    "node-sass": "^4.5.3",
+    "postcss-remove-prefixes": "^1.2.0",
+    "postcss-unprefix": "^2.1.1",
+    "pump": "^1.0.2",
+    "sass-module-importer": "^1.4.0"
+  },
+  "devDependencies": {
+    "gulp-livereload": "^3.8.1",
+    "gulp-mocha": "^4.3.1",
+    "gulp-sourcemaps": "^2.6.1",
+    "sass-true": "^3.0.1"
+  }
+}

@@ -10,3 +10,7 @@
 /vendor/
 /bin/
 /composer.phar
+
+node_modules/
+package-lock.json
+*.css.map
