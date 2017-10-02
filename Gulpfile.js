@@ -24,7 +24,7 @@ gulp.task('dev:watch', function() {
         'web/assets/js/**/*.js',
         'web/assets/css/styles.css',
         'app/Resources/views/**/*.html.twig',
-        'src/AppBundle/*.php',
+        'src/AppBundle/**/*.php',
     ]).on('change', function (file) {
         livereload.changed(file);
 

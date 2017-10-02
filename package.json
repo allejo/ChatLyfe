@@ -12,6 +12,7 @@
     "url": "https://github.com/allejo/ChatLyfe"
   },
   "dependencies": {
+    "bootstrap": "^4.0.0-beta",
     "eyeglass": "^1.3.0",
     "eyeglass-sassy-data": "^0.1.3",
     "gulp": "^3.9.1",
@@ -20,7 +21,9 @@
     "gulp-postcss": "^7.0.0",
     "gulp-sass": "^3.1.0",
     "gulp-util": "^3.0.8",
+    "jquery": "^3.2.1",
     "node-sass": "^4.5.3",
+    "popper.js": "^1.12.5",
     "postcss-remove-prefixes": "^1.2.0",
     "postcss-unprefix": "^2.1.1",
     "pump": "^1.0.2",
