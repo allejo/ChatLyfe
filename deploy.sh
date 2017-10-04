@@ -19,6 +19,15 @@ then
     rm composer-setup.php
 fi
 
+flag=$1
+
+if [[ $1 == "--prod" ]]
+then
+    git pull origin master
+else
+    git pull origin develop
+fi
+
 # Get dependencies and handle actual deployment
 export SYMFONY_ENV=prod
 ./composer.phar install --no-dev --optimize-autoloader

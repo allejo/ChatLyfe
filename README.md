@@ -30,9 +30,39 @@ node_modules/.bin/gulp sass:dist
 
 ## Developing
 
+During the initial setup of the dev environment, you'll likely have to setup ACL for the cache and log folders.
+
+```bash
+bash app/setup-acl.sh
+```
+
 To get started with development, use the first command to start a web server for Symfony and then running the Gulp task will automatically reload the website and recompile our Sass when changes are made.
 
 ```bash
 app/console server:start
 node_modules/.bin/gulp dev:watch
+```
+
+## Deployment
+
+All front-end assets are compiled and committed to Git, so it's only necessary to pull back-end dependencies through Composer and build the autoloader.
+
+During the initial deployment of the website, it's necessary to setup ACL for the cache and log folders. This script will ask for super user privileges to configure ACL.
+
+```bash
+bash app/setup-acl.sh
+```
+
+Regular deployment and updates to the website can be done through the `deploy.sh` script. The script will pull from Git and update the necessary files.
+
+To update the production website, use the `--prod` flag.
+
+```bash
+bash deploy.sh --prod
+```
+
+To update the staging environment, run the script without the flag.
+
+```bash
+bash deploy.sh
 ```
