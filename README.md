@@ -66,3 +66,11 @@ To update the staging environment, run the script without the flag.
 ```bash
 bash deploy.sh
 ```
+
+## Branching
+
+The `master` branch should reflect what is deployed to the production site and the `develop` branch should reflect what is on the staging site.
+
+All new features or changes should be done in branches. When the features are ready/complete, create a pull request against the `develop` branch and wait for someone else to review the code before merging or merge it in yourself if the change is small enough.
+
+As new features are ready to be deployed, a separate PR should be open from the `deploy` branch against the `master` and needs to be reviewed again before things are merged and deployed to production.
