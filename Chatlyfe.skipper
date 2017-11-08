@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<skipper version="3.2.10.1370" mvc="Symfony2" orm="Doctrine2" name="Chatlyfe" uuid="8cba5059-aaf7-441b-8cda-21dad12e0dde">
+  <module name="\src/AppBundle/Entity" local-name="src/AppBundle/Entity" namespace="\AppBundle\Entity" local-namespace="\AppBundle\Entity" export-format="Doctrine2Php" export-path="src/AppBundle/Entity" uuid="d8a149e2-49d2-4ca3-9483-2c348b822ace">
+    <entity name="\AppBundle\Entity\Chat" local-name="Chat" namespace="\AppBundle\Entity" uuid="a03c12b1-0b87-49b8-a846-f94e1fc31f65">
+      <field name="id" type="integer" required="true" primary="true" uuid="8d9c2f0a-35c8-4b4c-acfc-38bbc54879f8">
+        <orm-attributes>
+          <attribute name="column">Chat_ID</attribute>
+          <attribute name="generator">
+            <attribute name="strategy">AUTO</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="topic" type="string" size="255" uuid="63074ff8-8bce-40ec-b8d0-7acf1250db41">
+        <orm-attributes>
+          <attribute name="column">Chat_Topic</attribute>
+        </orm-attributes>
+      </field>
+      <field name="status" type="smallint" size="2" default="1" required="true" unsigned="true" uuid="b1f83675-6d96-47b2-be85-263f6eb5c02d">
+        <orm-attributes>
+          <attribute name="column">Status</attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="repository-class">AppBundle\Repository\ChatRepository</attribute>
+        <attribute name="table">Chat</attribute>
+        <attribute name="export-file-name">Chat.php</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\AppBundle\Entity\ChatroomJoin" local-name="ChatroomJoin" namespace="\AppBundle\Entity" uuid="45473ada-c8a6-4fe6-afe0-e10b9bd4861d">
+      <field name="id" type="integer" required="true" primary="true" uuid="269e7573-55de-4f26-ab16-128dae2cccd4">
+        <orm-attributes>
+          <attribute name="column">Join_ID</attribute>
+          <attribute name="generator">
+            <attribute name="strategy">AUTO</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="join_time" type="datetime" default="0" required="true" uuid="a20fc2a3-9bdf-4a8a-a105-30d4274ce0bc">
+        <orm-attributes>
+          <attribute name="column">Join_Time</attribute>
+        </orm-attributes>
+      </field>
+      <field name="part_time" type="datetime" uuid="029d7aa4-33c6-4615-b069-7695e73f9958">
+        <orm-attributes>
+          <attribute name="column">End_Time</attribute>
+        </orm-attributes>
+      </field>
+      <field name="user_id" type="integer" required="true" uuid="b2db6871-17f9-4abe-98c7-bc6cc9badde6">
+        <orm-attributes>
+          <attribute name="column">User_ID</attribute>
+        </orm-attributes>
+      </field>
+      <field name="chat_id" type="integer" required="true" uuid="70962b46-0724-4034-ba0b-3558ca835e46">
+        <orm-attributes>
+          <attribute name="column">Chat_ID</attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="repository-class">AppBundle\Repository\ChatroomJoinRepository</attribute>
+        <attribute name="table">Chatroom_Join</attribute>
+        <attribute name="export-file-name">ChatroomJoin.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\AppBundle\Entity\ChatroomJoin" to="\AppBundle\Entity\User" caption="User ChatroomJoin" inverse-alias="user" many-owner="true" many-inverse="false" parent-required="true" uuid="8fb358a7-7078-43ea-85ac-2f493d6b7a99">
+      <association-field from="user_id" to="id"/>
+    </association>
+    <association from="\AppBundle\Entity\ChatroomJoin" to="\AppBundle\Entity\Chat" caption="Chat ChatroomJoin" inverse-alias="chat" many-owner="true" many-inverse="false" parent-required="true" uuid="c086cb1a-0b98-4971-85f2-ab1de027c153">
+      <association-field from="chat_id" to="id"/>
+    </association>
+    <entity name="\AppBundle\Entity\User" local-name="User" namespace="\AppBundle\Entity" uuid="3bd8cc7a-ab39-4066-a91e-c6ebc879f0f5">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="f27cea3c-16ee-4103-8038-a683d11e853c">
+        <orm-attributes>
+          <attribute name="column">User_ID</attribute>
+        </orm-attributes>
+      </field>
+      <field name="first_name" type="string" size="100" uuid="54160401-93a2-4700-ab64-f6d6f89c6b13">
+        <orm-attributes>
+          <attribute name="column">First_Name</attribute>
+        </orm-attributes>
+      </field>
+      <field name="last_name" type="string" size="100" uuid="1ac49578-6a96-4e2b-af2a-d16a713a1648">
+        <orm-attributes>
+          <attribute name="column">Last_Name</attribute>
+        </orm-attributes>
+      </field>
+      <field name="username" type="string" size="100" required="true" uuid="7417eb58-5fa5-40c1-8b67-aa00a62e0216">
+        <orm-attributes>
+          <attribute name="column">Username</attribute>
+        </orm-attributes>
+      </field>
+      <field name="email" type="string" size="100" required="true" unique="true" uuid="e4494298-ff08-467f-95d8-80caaf55f1f5">
+        <orm-attributes>
+          <attribute name="column">Email</attribute>
+        </orm-attributes>
+      </field>
+      <field name="password" type="string" size="60" required="true" uuid="8ef2a0b9-b7a7-4685-8fdc-b1fd44c029f4">
+        <orm-attributes>
+          <attribute name="column">Password</attribute>
+        </orm-attributes>
+      </field>
+      <field name="salt" type="string" size="60" required="true" uuid="0cd3c199-e4fd-47cb-b771-396b11ca4ecc">
+        <orm-attributes>
+          <attribute name="column">Salt</attribute>
+        </orm-attributes>
+      </field>
+      <field name="status" type="smallint" default="1" required="true" unsigned="true" uuid="8654f899-6fc1-490f-a420-9d827d719a18">
+        <orm-attributes>
+          <attribute name="column">Status</attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="export-file-name">User.php</attribute>
+        <attribute name="table">User</attribute>
+        <attribute name="repository-class">AppBundle\Repository\UserRepository</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\AppBundle\Entity\DirectMessage" local-name="DirectMessage" namespace="\AppBundle\Entity" uuid="9f0c6b84-1e30-4059-8174-4cad8e6e5bc4">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="1335d920-66bb-44a0-9d2a-0871b54aab06">
+        <orm-attributes>
+          <attribute name="column">Msg_ID</attribute>
+        </orm-attributes>
+      </field>
+      <field name="user_a" type="integer" required="true" uuid="ef61c89a-e694-4f17-8521-085b81641c3b">
+        <orm-attributes>
+          <attribute name="column">User_A</attribute>
+        </orm-attributes>
+      </field>
+      <field name="user_b" type="integer" required="true" uuid="1c713a38-f34e-46b2-8293-66c6eb203ca3">
+        <orm-attributes>
+          <attribute name="column">User_B</attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">Direct_Message</attribute>
+        <attribute name="export-file-name">DirectMessage.php</attribute>
+        <attribute name="repository-class">AppBundle\Repository\DirectMessageRepository</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\AppBundle\Entity\DirectMessage" to="\AppBundle\Entity\User" caption="User DirectMessage" inverse-alias="user_a" many-owner="true" many-inverse="false" parent-required="true" uuid="871f1419-1c83-43eb-9416-24f61d003fe1">
+      <association-field from="user_a" to="id"/>
+    </association>
+    <association from="\AppBundle\Entity\DirectMessage" to="\AppBundle\Entity\User" caption="User DirectMessage" inverse-alias="user_b" many-owner="true" many-inverse="false" parent-required="true" uuid="072e272d-a581-4c70-89f7-ce68dda0b37b">
+      <association-field from="user_b" to="id"/>
+    </association>
+  </module>
+  <visual-data>
+    <association uuid="072e272d-a581-4c70-89f7-ce68dda0b37b" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="-18" color="#969696"/>
+    <association uuid="871f1419-1c83-43eb-9416-24f61d003fe1" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="14" color="#969696"/>
+    <association uuid="8fb358a7-7078-43ea-85ac-2f493d6b7a99" color="#969696"/>
+    <association uuid="c086cb1a-0b98-4971-85f2-ab1de027c153" color="#969696"/>
+    <entity uuid="3bd8cc7a-ab39-4066-a91e-c6ebc879f0f5" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="250" position-y="200" size-x="0" size-x2="117" size-y="0" size-y2="129"/>
+    <entity uuid="45473ada-c8a6-4fe6-afe0-e10b9bd4861d" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="50" position-y="200" size-x="0" size-x2="104" size-y="0" size-y2="87"/>
+    <entity uuid="9f0c6b84-1e30-4059-8174-4cad8e6e5bc4" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="200" position-y="50" size-x="0" size-x2="87" size-y="0" size-y2="59"/>
+    <entity uuid="a03c12b1-0b87-49b8-a846-f94e1fc31f65" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="50" position-y="50" size-x="0" size-x2="98" size-y="0" size-y2="59"/>
+    <module uuid="d8a149e2-49d2-4ca3-9483-2c348b822ace" bg-color="#FEFCE8" position-x="50" position-y="50" size-x="0" size-x2="496" size-y="0" size-y2="400"/>
+    <project uuid="8cba5059-aaf7-441b-8cda-21dad12e0dde" size-x="0" size-x2="616" size-y="0" size-y2="511"/>
+  </visual-data>
+</skipper>
