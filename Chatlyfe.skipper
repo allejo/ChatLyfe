@@ -142,17 +142,72 @@
     <association from="\AppBundle\Entity\DirectMessage" to="\AppBundle\Entity\User" caption="User DirectMessage" inverse-alias="user_b" many-owner="true" many-inverse="false" parent-required="true" uuid="072e272d-a581-4c70-89f7-ce68dda0b37b">
       <association-field from="user_b" to="id"/>
     </association>
+    <entity name="\AppBundle\Entity\Message" local-name="Message" namespace="\AppBundle\Entity" uuid="6e8815ae-feb9-4b6e-be37-8b0c07345b58">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="04e665cc-726a-432e-8e72-69bce1bdf0ff">
+        <orm-attributes>
+          <attribute name="column">Msg_ID</attribute>
+        </orm-attributes>
+      </field>
+      <field name="message" type="text" required="true" uuid="c536df07-08fa-4cab-aee3-5e99eff8b2d0">
+        <orm-attributes>
+          <attribute name="column">Message</attribute>
+        </orm-attributes>
+      </field>
+      <field name="user_id" type="integer" required="true" uuid="5dec1c96-8c48-49a9-a705-1dcdf861d35f">
+        <orm-attributes>
+          <attribute name="column">Author_ID</attribute>
+        </orm-attributes>
+      </field>
+      <field name="chat_id" type="integer" uuid="73b85a7b-d2bd-4b00-b9ba-9d12c81933f1">
+        <orm-attributes>
+          <attribute name="column">Chat_ID</attribute>
+        </orm-attributes>
+      </field>
+      <field name="direct_message_id" type="integer" uuid="0d53d8e2-d0e8-45dd-9e52-daa85ae8c313">
+        <orm-attributes>
+          <attribute name="column">Direct_Message_ID</attribute>
+        </orm-attributes>
+      </field>
+      <field name="timestamp" type="datetime" required="true" uuid="104d7be7-bb7b-44f4-808d-f0ed9c88213c">
+        <orm-attributes>
+          <attribute name="column">Timestamp</attribute>
+        </orm-attributes>
+      </field>
+      <field name="status" type="smallint" default="1" required="true" uuid="190839f0-633a-44f0-9c9d-1d3a9e0de166">
+        <orm-attributes>
+          <attribute name="column">Status</attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="export-file-name">Message.php</attribute>
+        <attribute name="table">Message</attribute>
+        <attribute name="repository-class">AppBundle\Repository\MessageRepository</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\AppBundle\Entity\Message" to="\AppBundle\Entity\User" caption="User Message" inverse-alias="author" many-owner="true" many-inverse="false" parent-required="true" uuid="24b0efc0-999c-46db-853f-7a444a40a006">
+      <association-field from="user_id" to="id"/>
+    </association>
+    <association from="\AppBundle\Entity\Message" to="\AppBundle\Entity\Chat" caption="Chat Message" owner-alias="messages" inverse-alias="chat" many-owner="true" many-inverse="false" uuid="e9a5dc51-ddc5-43f1-b0bc-22376e4a8087">
+      <association-field from="chat_id" to="id"/>
+    </association>
+    <association from="\AppBundle\Entity\Message" to="\AppBundle\Entity\DirectMessage" caption="DirectMessage Message" owner-alias="messages" inverse-alias="direct_message" many-owner="true" many-inverse="false" uuid="d5351efe-16d3-4580-9b7e-d427db915e86">
+      <association-field from="direct_message_id" to="id"/>
+    </association>
   </module>
   <visual-data>
-    <association uuid="072e272d-a581-4c70-89f7-ce68dda0b37b" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="-18" color="#969696"/>
-    <association uuid="871f1419-1c83-43eb-9416-24f61d003fe1" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="14" color="#969696"/>
+    <association uuid="072e272d-a581-4c70-89f7-ce68dda0b37b" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="-1" color="#969696"/>
+    <association uuid="24b0efc0-999c-46db-853f-7a444a40a006" color="#969696"/>
+    <association uuid="871f1419-1c83-43eb-9416-24f61d003fe1" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="1" color="#969696"/>
     <association uuid="8fb358a7-7078-43ea-85ac-2f493d6b7a99" color="#969696"/>
     <association uuid="c086cb1a-0b98-4971-85f2-ab1de027c153" color="#969696"/>
-    <entity uuid="3bd8cc7a-ab39-4066-a91e-c6ebc879f0f5" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="250" position-y="200" size-x="0" size-x2="117" size-y="0" size-y2="129"/>
-    <entity uuid="45473ada-c8a6-4fe6-afe0-e10b9bd4861d" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="50" position-y="200" size-x="0" size-x2="104" size-y="0" size-y2="87"/>
-    <entity uuid="9f0c6b84-1e30-4059-8174-4cad8e6e5bc4" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="200" position-y="50" size-x="0" size-x2="87" size-y="0" size-y2="59"/>
+    <association uuid="d5351efe-16d3-4580-9b7e-d427db915e86" color="#969696"/>
+    <association uuid="e9a5dc51-ddc5-43f1-b0bc-22376e4a8087" color="#969696"/>
+    <entity uuid="3bd8cc7a-ab39-4066-a91e-c6ebc879f0f5" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="369" position-y="253" size-x="0" size-x2="117" size-y="0" size-y2="129"/>
+    <entity uuid="45473ada-c8a6-4fe6-afe0-e10b9bd4861d" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="17" position-y="291" size-x="0" size-x2="104" size-y="0" size-y2="87"/>
+    <entity uuid="6e8815ae-feb9-4b6e-be37-8b0c07345b58" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="192" position-y="383" size-x="0" size-x2="135" size-y="0" size-y2="115"/>
+    <entity uuid="9f0c6b84-1e30-4059-8174-4cad8e6e5bc4" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="255" position-y="90" size-x="0" size-x2="87" size-y="0" size-y2="59"/>
     <entity uuid="a03c12b1-0b87-49b8-a846-f94e1fc31f65" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="50" position-y="50" size-x="0" size-x2="98" size-y="0" size-y2="59"/>
-    <module uuid="d8a149e2-49d2-4ca3-9483-2c348b822ace" bg-color="#FEFCE8" position-x="50" position-y="50" size-x="0" size-x2="496" size-y="0" size-y2="400"/>
-    <project uuid="8cba5059-aaf7-441b-8cda-21dad12e0dde" size-x="0" size-x2="616" size-y="0" size-y2="511"/>
+    <module uuid="d8a149e2-49d2-4ca3-9483-2c348b822ace" bg-color="#FEFCE8" position-x="50" position-y="50" size-x="0" size-x2="496" size-y="0" size-y2="509"/>
+    <project uuid="8cba5059-aaf7-441b-8cda-21dad12e0dde" size-x="0" size-x2="616" size-y="0" size-y2="572"/>
   </visual-data>
 </skipper>

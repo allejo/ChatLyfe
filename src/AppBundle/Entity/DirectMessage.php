@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +18,11 @@ class DirectMessage
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="direct_message")
+     */
+    private $messages;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="User_A", referencedColumnName="User_ID", nullable=false)
      */
@@ -32,6 +35,14 @@ class DirectMessage
     private $user_b;
 
     /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id.
      *
      * @return int
@@ -39,6 +50,40 @@ class DirectMessage
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Add message.
+     *
+     * @param \AppBundle\Entity\Message $message
+     *
+     * @return DirectMessage
+     */
+    public function addMessage(\AppBundle\Entity\Message $message)
+    {
+        $this->messages[] = $message;
+
+        return $this;
+    }
+
+    /**
+     * Remove message.
+     *
+     * @param \AppBundle\Entity\Message $message
+     */
+    public function removeMessage(\AppBundle\Entity\Message $message)
+    {
+        $this->messages->removeElement($message);
+    }
+
+    /**
+     * Get messages.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 
     /**
