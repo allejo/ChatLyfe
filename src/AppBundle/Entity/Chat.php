@@ -18,6 +18,11 @@ class Chat
     private $id;
 
     /**
+     * @ORM\Column(type="string", unique=true, length=32, nullable=false, name="Chat_Name")
+     */
+    private $name;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true, name="Chat_Topic")
      */
     private $topic;
@@ -130,5 +135,29 @@ class Chat
     public function getMessages()
     {
         return $this->messages;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Chat
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

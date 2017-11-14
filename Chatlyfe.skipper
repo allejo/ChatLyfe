@@ -10,6 +10,11 @@
           </attribute>
         </orm-attributes>
       </field>
+      <field name="name" type="string" size="32" required="true" unique="true" uuid="c7b1e6bb-c819-4138-a766-e31dc21d5b52">
+        <orm-attributes>
+          <attribute name="column">Chat_Name</attribute>
+        </orm-attributes>
+      </field>
       <field name="topic" type="string" size="255" uuid="63074ff8-8bce-40ec-b8d0-7acf1250db41">
         <orm-attributes>
           <attribute name="column">Chat_Topic</attribute>
