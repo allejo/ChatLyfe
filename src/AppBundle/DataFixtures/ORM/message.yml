@@ -1,0 +1,4 @@
+AppBundle\Entity\Message:
+    message_{1..100}:
+        message: <sentance(60)>
+        status: 1
