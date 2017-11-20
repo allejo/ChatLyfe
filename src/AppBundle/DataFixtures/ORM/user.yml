@@ -1,0 +1,9 @@
+AppBundle\Entity\User:
+    user_{1..20}:
+        first_name: <firstName()>
+        last_name: <lastName()>
+        username: <userName()>
+        email: <safeEmail()>
+        password: <sha1()>
+        salt: <sha1()>
+        status: 1

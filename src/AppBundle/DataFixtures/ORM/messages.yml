@@ -1,0 +1,14 @@
+AppBundle\Entity\Message:
+    message_{1..100}:
+        message: <sentence(60)>
+        timestamp: <dateTimeBetween("-60 days", "now")>
+        author: '@user_*'
+        chat: '@chat_*'
+        status: 1
+
+    private_message_{1..75}:
+        message: <sentence(30)>
+        timestamp: <dateTimeBetween("-60 days", "now")>
+        author: '@user_*'
+        direct_message: '@direct_message_*'
+        status: 1

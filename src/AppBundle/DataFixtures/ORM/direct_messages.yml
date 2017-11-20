@@ -1,0 +1,4 @@
+AppBundle\Entity\DirectMessage:
+    direct_message_{1..20}:
+        user_a: '@user_*'
+        user_b: '@user_*'
