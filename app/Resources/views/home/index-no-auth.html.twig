@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    ChatLyfe - Enjoy your chat with everyone
+{% endblock %}
+
+{% block body %}
+    <div class="container py-2">
+        <h1 class="strong text-color--white text-size-65">ChatLyfe</h1>
+        <h2 class="strong text-color--white">Enjoy your chat with everyone!</h2>
+
+        {# @todo replace with FOSUserBundle routes #}
+        <div class="text-center mb-3 mt-5">
+            <a href="#" class="btn btn-primary--chatlyfe">Login</a>
+        </div>
+        <div class="text-center">
+            <a href="#" class="btn btn-primary--chatlyfe">Create Account</a>
+        </div>
+    </div>
+{% endblock %}
