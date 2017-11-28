@@ -33,6 +33,13 @@ class User extends BaseUser
      */
     protected $status;
 
+    public function __construct ()
+    {
+        parent::__construct();
+
+        $this->status = 1;
+    }
+
     /**
      * Get id.
      *
