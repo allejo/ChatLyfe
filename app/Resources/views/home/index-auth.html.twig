@@ -5,22 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    {% include '::navbar.html.twig' %}
-
     <div class="container-fluid py-2">
         <div class="row content">
             <aside class="col-sm-3 hidden-xs">
-                <h2>Recent</h2>
-                <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
-                    </li>
-                    {% for channel in myChannels %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">{{ channel.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                {% include '::navbar.html.twig' with { myChannels: myChannels } %}
             </aside>
 
             <div class="col-sm-9">
