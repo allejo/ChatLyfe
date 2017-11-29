@@ -3,54 +3,42 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="User")
  */
-class User
+class User extends BaseUser
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="User_ID")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true, name="First_Name")
      */
-    private $first_name;
+    protected $first_name;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true, name="Last_Name")
      */
-    private $last_name;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=false, name="Username")
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", unique=true, length=100, nullable=false, name="Email")
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=60, nullable=false, name="Password")
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="string", length=60, nullable=false, name="Salt")
-     */
-    private $salt;
+    protected $last_name;
 
     /**
      * @ORM\Column(type="smallint", nullable=false, name="Status", options={"default" = 1, "unsigned" = true})
      */
-    private $status;
+    protected $status;
+
+    public function __construct ()
+    {
+        parent::__construct();
+
+        $this->status = 1;
+    }
 
     /**
      * Get id.
@@ -108,102 +96,6 @@ class User
     public function getLastName()
     {
         return $this->last_name;
-    }
-
-    /**
-     * Set username.
-     *
-     * @param string $username
-     *
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Get username.
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Set email.
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set password.
-     *
-     * @param string $password
-     *
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password.
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set salt.
-     *
-     * @param string $salt
-     *
-     * @return User
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
-    /**
-     * Get salt.
-     *
-     * @return string
-     */
-    public function getSalt()
-    {
-        return $this->salt;
     }
 
     /**
