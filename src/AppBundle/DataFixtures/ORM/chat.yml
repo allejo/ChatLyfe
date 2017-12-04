@@ -1,0 +1,5 @@
+AppBundle\Entity\Chat:
+    chat_{1..10}:
+        name (unique): <word()>
+        topic: <sentence(15)>
+        status: <biasedNumberBetween(0, 1)>

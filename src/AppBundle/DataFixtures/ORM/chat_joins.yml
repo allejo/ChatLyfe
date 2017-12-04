@@ -1,0 +1,6 @@
+AppBundle\Entity\ChatroomJoin:
+    join_{1..10}:
+        join_time: <dateTimeBetween("-30 days", "now")>
+        part_time: 50%? <dateTimeBetween("-5 days", "now")>
+        user: '@user_*'
+        chat: '@chat_*'
