@@ -15,11 +15,10 @@
                 <div class="row">
                     {% for channel in allChannels %}
                         <div class="col-sm-3">
-                            <a href="#"
-                               class="btn btn-primary--chatlyfe text-center py-3 d-block"
+                            <a href="{{ path('view_chat', { id: channel.id }) }}"
+                               class="btn btn-primary--chatlyfe text-center mb-3 py-3 d-block"
                             >
                                 <p class="m-0"><strong>{{ channel.name }}</strong></p>
-                                <span>{{ channel.memberCount }}</span>
                             </a>
                         </div>
                     {% endfor %}

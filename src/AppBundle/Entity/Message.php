@@ -50,6 +50,12 @@ class Message
      */
     private $direct_message;
 
+    public function __construct()
+    {
+        $this->status = 1;
+        $this->timestamp = new \DateTime();
+    }
+
     /**
      * Get id.
      *

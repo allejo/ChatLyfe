@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class DefaultController extends Controller
@@ -13,6 +14,8 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      *
      * @param Request $request
+     *
+     * @return Response
      */
     public function indexAction(Request $request)
     {
@@ -24,8 +27,13 @@ class DefaultController extends Controller
             ));
         }
 
+        $em = $this->getDoctrine()->getManager();
+        $allChannels = $em->getRepository('AppBundle:Chat')->findBy([
+            'status' => 1,
+        ]);
+
         return $this->render(':home:index-auth.html.twig', array(
-            'allChannels' => [],
+            'allChannels' => $allChannels,
             'myChannels' => []
         ));
     }

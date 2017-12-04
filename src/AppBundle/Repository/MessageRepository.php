@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessageRepository extends EntityRepository
 {
+    public function findMessagesInChannel($channelID)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->andWhere('m.chat = :id')
+            ->setParameter('id', $channelID)
+            ->andWhere('m.status = 1')
+            ->orderBy('m.timestamp', 'ASC')
+            ->setMaxResults(50)
+        ;
+
+        return $qb->getQuery()->execute();
+    }
 }
