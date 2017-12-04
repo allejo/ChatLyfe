@@ -30,3 +30,23 @@
         </section>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script>
+        {% if app.debug %}
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+        {% endif %}
+
+        var pusher = new Pusher({{ push_key }}, {
+            cluster: 'us2',
+            encrypted: true
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            console.log(data.message);
+        });
+    </script>
+{% endblock %}

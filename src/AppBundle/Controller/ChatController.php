@@ -48,6 +48,7 @@ class ChatController extends Controller
             'messages' => $messages,
             'users' => $users,
             'form' => $form->createView(),
+            'push_key' => $this->getParameter('pusher_key'),
         ]);
     }
 }
