@@ -6,15 +6,9 @@
             <strong>{{ chat.name }}</strong> :: {{ chat.topic }}
         </header>
         <div class="row">
-            <div class="col-md-10">
+            <div id="chat-view" class="col-md-10">
                 {% for message in messages %}
-                    <div class="row">
-                        <div class="col-md-2">{{ message.author.username }}</div>
-                        <div class="col-md-9">{{ message.message }}</div>
-                        <div class="col-md-1 text-right">
-                            <span title="{{ message.timestamp | date('M d, Y h:m:ia') }}">{{ message.timestamp | date('h:ma') }}</span>
-                        </div>
-                    </div>
+                    {% include ':chat:message.html.twig' with { message: message } %}
                 {% endfor %}
             </div>
             <div class="col-md-2">
@@ -39,14 +33,26 @@
             Pusher.logToConsole = true;
         {% endif %}
 
-        var pusher = new Pusher({{ push_key }}, {
+        var pusher = new Pusher('{{ pusher.key }}', {
             cluster: 'us2',
             encrypted: true
         });
 
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
-            console.log(data.message);
+        var channel = pusher.subscribe('{{ pusher.channel }}');
+        channel.bind('message_sent', function(data) {
+            $('#chat-view').append(data.message);
+        });
+    </script>
+    <script>
+        $('form[name="app_bundle_message_form_type"]').submit(function (e) {
+            e.preventDefault();
+
+            var url = "{{ path('view_chat', { id: chat.id }) }}";
+            var formSerialize = $(this).serialize();
+
+            $.post(url, formSerialize, function (response) {
+                console.log(response);
+            }, 'JSON');
         });
     </script>
 {% endblock %}

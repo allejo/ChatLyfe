@@ -3,10 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Message;
+use Pusher\Pusher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/chats")
@@ -14,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ChatController extends Controller
 {
     /**
-     * @Route("/{id}", name="view_chat")
+     * @Route("/view/{id}", name="view_chat")
      *
      * @param int $id
      *
@@ -23,10 +26,16 @@ class ChatController extends Controller
     public function viewAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $chat = $em->getRepository('AppBundle:Chat')->find($id);
-        $messages = $em->getRepository('AppBundle:Message')->findMessagesInChannel($id);
-        $users = $em->getRepository('AppBundle:User')->findUsersInChannel($id);
+
+        if ($chat === null) {
+            throw $this->createNotFoundException('This chat does not exist');
+        }
+
+        if (!$this->getUser() instanceof UserInterface) {
+            throw $this->createAccessDeniedException('You must be logged in to use this functionality.');
+        }
+
         $form = $this->createForm('AppBundle\Form\MessageFormType');
 
         $form->handleRequest($request);
@@ -39,16 +48,50 @@ class ChatController extends Controller
                 ->setChat($chat)
             ;
 
+            $this->sendPusherEvent($message, $id);
+
             $em->persist($message);
             $em->flush();
+
+            return (new JsonResponse([
+                'status' => 'success',
+            ]));
         }
+
+        $messages = $em->getRepository('AppBundle:Message')->findMessagesInChannel($id);
+        $users = $em->getRepository('AppBundle:User')->findUsersInChannel($id);
 
         return $this->render(':chat:view.html.twig', [
             'chat' => $chat,
             'messages' => $messages,
             'users' => $users,
             'form' => $form->createView(),
-            'push_key' => $this->getParameter('pusher_key'),
+            'pusher' => [
+                'key' => $this->getParameter('pusher_key'),
+                'channel' => sprintf('chats_%d', $id),
+            ],
         ]);
+    }
+
+    /**
+     * Send a Pusher event to all connected clients on this channel.
+     *
+     * @param int $channelID
+     */
+    private function sendPusherEvent(Message $message, $channelID)
+    {
+        $data = [
+            'message' => $this->renderView(':chat:message.html.twig', [
+                'message' => $message,
+            ])
+        ];
+
+        /** @var Pusher $pusher */
+        $pusher = $this->get('pusher');
+        $pusher->trigger(
+            sprintf('chats_%d', $channelID),
+            'message_sent',
+            $data
+        );
     }
 }
