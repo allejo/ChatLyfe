@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-2">{{ message.author.username }}</div>
-    <div class="col-md-9">{{ message.message }}</div>
-    <div class="col-md-1 text-right">
+    <div class="col-md-8">{{ message.message }}</div>
+    <div class="col-md-2 text-right">
         <span title="{{ message.timestamp | date('M d, Y h:m:ia') }}">{{ message.timestamp | date('h:ma') }}</span>
     </div>
 </div>

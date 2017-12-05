@@ -12,7 +12,14 @@ class MessageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('message', 'Symfony\Component\Form\Extension\Core\Type\TextType', [])
+            ->add('message', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+                'attr' => [
+                    'placeholder' => 'Send a message',
+                ],
+                'label_attr' => [
+                    'class' => 'sr-only',
+                ],
+            ])
             ->add('send', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
                 'label' => 'Send'
             ])
