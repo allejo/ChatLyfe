@@ -70,6 +70,9 @@
             var url = "{{ path('view_chat', { id: chat.id }) }}";
             var formSerialize = $(this).serialize();
 
+            // Reset the input value to empty after the message has been serialized
+            $('#app_bundle_message_form_type_message').val('');
+
             $.post(url, formSerialize, function (response) {
                 console.log(response);
             }, 'JSON');

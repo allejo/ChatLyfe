@@ -48,6 +48,14 @@ class ChatController extends Controller
                 ->setChat($chat)
             ;
 
+            // Don't send out the message if it's an empty message
+            $msg = trim($message->getMessage());
+            if (empty($msg)) {
+                return (new JsonResponse([
+                    'status' => 'failed',
+                ]));
+            }
+
             $this->sendPusherEvent($message, $id);
 
             $em->persist($message);
