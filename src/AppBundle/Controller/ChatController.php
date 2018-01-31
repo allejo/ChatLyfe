@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Message;
+use AppBundle\Form\ChatFormType;
 use Pusher\Pusher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,6 +17,22 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class ChatController extends Controller
 {
+    /**
+     * @Route("/create", name="create_chat")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function createAction(Request $request)
+    {
+        $form = $this->createForm(ChatFormType::class);
+
+        return $this->render(':chat:create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     /**
      * @Route("/view/{id}", name="view_chat")
      *
