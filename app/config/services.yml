@@ -4,6 +4,20 @@ parameters:
     #parameter_name: value
 
 services:
+    pusher:
+        class: 'Pusher\Pusher'
+        factory: ['AppBundle\Service\PusherFactory', createPusher]
+        arguments:
+            $id: '%pusher_id%'
+            $key: '%pusher_key%'
+            $secret: '%pusher_secret%'
+
+    fos_user_registration:
+        class: 'AppBundle\EventListener\RegistrationConfirmationListener'
+        arguments: ['@router']
+        tags:
+            - { name: kernel.event_subscriber }
+
     #service_name:
     #    class: AppBundle\Directory\ClassName
     #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']

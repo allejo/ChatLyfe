@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * UserRepository.
@@ -12,4 +13,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function findUsersInChannel($channelID)
+    {
+        $qb = new QueryBuilder($this->getEntityManager());
+        $qb
+            ->select('cj')
+            ->from('AppBundle:ChatroomJoin', 'cj')
+            ->andWhere('cj.part_time IS NULL')
+            ->andWhere('cj.chat = :id')
+            ->setParameter('id', $channelID)
+        ;
+
+        return $qb->getQuery()->execute();
+    }
 }

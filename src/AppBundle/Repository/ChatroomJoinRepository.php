@@ -12,4 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class ChatroomJoinRepository extends EntityRepository
 {
+    public function findUsersInChannel($channelID)
+    {
+
+    }
 }

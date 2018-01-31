@@ -1,0 +1,81 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid s-messenger">
+        <section class="c-messenger">
+            <header class="c-messenger__header border border-top-0 border-left-0 border-right-0 mb-3 py-3">
+                <strong>{{ chat.name }}</strong> :: {{ chat.topic }}
+            </header>
+            <div class="row mb-3">
+                <div class="col-md-10">
+                    <section class="c-messenger__viewer">
+                        <div class="chat-messages-text" id="chat-view">
+                            {% for message in messages %}
+                                {% include ':chat:message.html.twig' with { message: message } %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-2 border border-top-0 border-bottom-0 border-right-0">
+                    <ul>
+                        {% for user in users %}
+                            <li>{{ user.user.username }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <section class="c-messenger__input border border-bottom-0 border-left-0 border-right-0 py-3">
+                <div class="row">
+                    <div class="col-md-10">
+                        {{ form_start(form, { attr: { class: 'form-inline' } }) }}
+                            <div class="form-group mr-2">
+                                {{ form_label(form.message) }}
+                                {{ form_widget(form.message, { attr: { class: 'form-control' } }) }}
+                                {{ form_errors(form.message) }}
+                            </div>
+
+                            {{ form_row(form.send, { attr: { class: 'btn btn-primary' } }) }}
+
+                            {{ form_rest(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script>
+        {% if app.debug %}
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+        {% endif %}
+
+        var pusher = new Pusher('{{ pusher.key }}', {
+            cluster: 'us2',
+            encrypted: true
+        });
+
+        var channel = pusher.subscribe('{{ pusher.channel }}');
+        channel.bind('message_sent', function(data) {
+            $('#chat-view').append(data.message);
+        });
+    </script>
+    <script>
+        $('form[name="app_bundle_message_form_type"]').submit(function (e) {
+            e.preventDefault();
+
+            var url = "{{ path('view_chat', { id: chat.id }) }}";
+            var formSerialize = $(this).serialize();
+
+            // Reset the input value to empty after the message has been serialized
+            $('#app_bundle_message_form_type_message').val('');
+
+            $.post(url, formSerialize, function (response) {
+                console.log(response);
+            }, 'JSON');
+        });
+    </script>
+{% endblock %}

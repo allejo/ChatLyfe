@@ -18,7 +18,7 @@ class ChatroomJoin
     private $id;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false, name="Join_Time", options={"default" = 0})
+     * @ORM\Column(type="datetime", nullable=false, name="Join_Time")
      */
     private $join_time;
 
@@ -38,6 +38,11 @@ class ChatroomJoin
      * @ORM\JoinColumn(name="Chat_ID", referencedColumnName="Chat_ID", nullable=false)
      */
     private $chat;
+
+    public function __construct()
+    {
+        $this->join_time = new \DateTime();
+    }
 
     /**
      * Get id.
