@@ -1,12 +1,66 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="container">
-    <h1>New User Registration</h1>
+{% block fos_user_content %}
+    <div class="background background--sailboat py-5">
+        <div class="container">
+            <div class="header">
+                <a href="{{ path('homepage') }}">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="ChatLyfe logo" />
+                </a>
+            </div>
 
-    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-        {{ form_widget(form) }}
-        <div>
-            <input type="submit" value="{{ 'registration.submit'|trans }}" />
+            <div class="row">
+                <div class="col-md-4">
+                    <h1 class="mb-4">Create Account</h1>
+
+                    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                        {{ form_row(form.email, {
+                            attr: {
+                                class: 'form-control mb-3',
+                                placeholder: 'form.email'|trans
+                            },
+                            label: 'form.email'|trans,
+                            label_attr: { class: 'sr-only' },
+                        }) }}
+
+                        {{ form_row(form.username, {
+                            attr: {
+                                class: 'form-control mb-3',
+                                placeholder: 'form.username'|trans
+                            },
+                            label: 'form.username'|trans,
+                            label_attr: { class: 'sr-only' },
+                        }) }}
+
+                        {{ form_row(form.plainPassword.first, {
+                            attr: {
+                                class: 'form-control mb-3',
+                                placeholder: 'form.password'|trans
+                            },
+                            label: 'form.password'|trans,
+                            label_attr: { class: 'sr-only' },
+                        }) }}
+
+                        {{ form_row(form.plainPassword.second, {
+                            attr: {
+                                class: 'form-control mb-3',
+                                placeholder: 'form.password_confirmation'|trans
+                            },
+                            label: 'form.password_confirmation'|trans,
+                            label_attr: { class: 'sr-only' },
+                        }) }}
+
+                        {{ form_rest(form) }}
+
+                        <div>
+                            <input class="btn btn-secondary btn-chatlyfe"
+                                   type="submit"
+                                   value="{{ 'registration.submit'|trans }}"
+                            />
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
         </div>
-    {{ form_end(form) }}
-</div>
+    </div>
+{% endblock %}

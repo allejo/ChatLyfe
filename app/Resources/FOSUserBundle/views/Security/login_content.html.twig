@@ -1,26 +1,62 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="container">
-    <h1>Login</h1>
+{% block fos_user_content %}
+    <div class="background background--sailboat py-5">
+        <div class="container">
+            <div class="header">
+                <a href="{{ path('homepage') }}">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="ChatLyfe logo" />
+                </a>
+            </div>
 
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+            <div class="row">
+                <div class="col-md-4">
+                    <h1 class="mb-4">Please Log In</h1>
 
-    <form action="{{ path("fos_user_security_check") }}" method="post">
-        {% if csrf_token %}
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-        {% endif %}
+                    {% if error %}
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
 
-        <label for="username">{{ 'security.login.username'|trans }}</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                    <form action="{{ path("fos_user_security_check") }}" method="post">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-        <label for="password">{{ 'security.login.password'|trans }}</label>
-        <input type="password" id="password" name="_password" required="required" />
+                        <div class="form-group mb-3">
+                            <label class="sr-only" for="username">{{ 'security.login.username'|trans }}</label>
+                            <input class="form-control"
+                                   type="text"
+                                   id="username"
+                                   name="_username"
+                                   value="{{ last_username }}"
+                                   required="required"
+                                   placeholder="{{ 'security.login.username'|trans }}"
+                            />
+                        </div>
 
-        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                        <div class="form-group mb-3">
+                            <label class="sr-only" for="password">{{ 'security.login.password'|trans }}</label>
+                            <input class="form-control"
+                                   type="password"
+                                   id="password"
+                                   name="_password"
+                                   required="required"
+                                   placeholder="{{ 'security.login.password'|trans }}"
+                            />
+                        </div>
 
-        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-    </form>
-</div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                            <label class="form-check-label" for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                        </div>
+
+                        <input class="btn btn-secondary btn-chatlyfe"
+                               type="submit"
+                               id="_submit"
+                               name="_submit"
+                               value="{{ 'security.login.submit'|trans }}"
+                        />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
