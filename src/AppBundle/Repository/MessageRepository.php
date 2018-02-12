@@ -18,7 +18,7 @@ class MessageRepository extends EntityRepository
             ->andWhere('m.chat = :id')
             ->setParameter('id', $channelID)
             ->andWhere('m.status = 1')
-            ->orderBy('m.timestamp', 'ASC')
+            ->orderBy('m.timestamp', 'DESC')
             ->setMaxResults(50)
         ;
 

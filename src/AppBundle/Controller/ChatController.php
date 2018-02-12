@@ -71,7 +71,7 @@ class ChatController extends Controller
 
         return $this->render(':chat:view.html.twig', [
             'chat' => $chat,
-            'messages' => $messages,
+            'messages' => array_reverse($messages),
             'users' => $users,
             'form' => $form->createView(),
             'pusher' => [
