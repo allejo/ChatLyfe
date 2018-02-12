@@ -5,15 +5,24 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container py-2">
-        <h1 class="strong text-color--white text-size-65">ChatLyfe</h1>
-        <h2 class="strong text-color--white">Enjoy your chat with everyone!</h2>
+    <div class="background background--sailboat py-5">
+        <div class="container">
+            <div class="header">
+                <a href="{{ path('homepage') }}">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="ChatLyfe logo" />
+                </a>
+            </div>
 
-        <div class="text-center mb-3 mt-5">
-            <a href="{{ path('fos_user_security_login') }}" class="btn btn-primary--chatlyfe">Login</a>
-        </div>
-        <div class="text-center">
-            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-primary--chatlyfe">Create Account</a>
+            <div class="welcome-text">
+                <h1 class="mt-0">ChatLyfe</h1>
+                <p>Where everyone enjoys a good chat!</p>
+            </div>
+
+            <div class="p-2">
+                <a href="{{ path('fos_user_security_login') }}" class="btn btn-secondary btn-chatlyfe m-1">Login</a>
+                <br>
+                <a href="{{ path('fos_user_registration_register') }}" class="btn btn-secondary btn-chatlyfe m-1">Create an Account</a>
+            </div>
         </div>
     </div>
 {% endblock %}
