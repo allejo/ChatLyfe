@@ -38,6 +38,13 @@ class Chat
     private $messages;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="creator_id", referencedColumnName="User_ID", nullable=true)
+     * @var User
+     */
+    private $owner;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -159,5 +166,21 @@ class Chat
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param User $owner
+     */
+    public function setOwner(User $owner)
+    {
+        $this->owner = $owner;
     }
 }

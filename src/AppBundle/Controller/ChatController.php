@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Chat;
 use AppBundle\Entity\Message;
 use AppBundle\Form\ChatFormType;
 use Pusher\Pusher;
@@ -26,7 +27,24 @@ class ChatController extends Controller
      */
     public function createAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
         $form = $this->createForm(ChatFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $form->isSubmitted()) {
+            /** @var Chat $chat */
+            $chat = $form->getData();
+            $chat->setOwner($user);
+
+            $em->persist($chat);
+            $em->flush();
+
+            return $this->redirectToRoute('view_chat', [
+                'id' => $chat->getId(),
+            ]);
+        }
 
         return $this->render(':chat:create.html.twig', [
             'form' => $form->createView(),
