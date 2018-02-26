@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Channel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +29,7 @@ class DefaultController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $allChannels = $em->getRepository('AppBundle:Chat')->findBy([
+        $allChannels = $em->getRepository(Channel::class)->findBy([
             'status' => 1,
         ]);
 

@@ -2,8 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Chat;
+use AppBundle\Entity\Channel;
 use AppBundle\Entity\Message;
+use AppBundle\Entity\User;
 use AppBundle\Form\ChatFormType;
 use Pusher\Pusher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -34,9 +35,10 @@ class ChatController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-            /** @var Chat $chat */
+            /** @var Channel $chat */
             $chat = $form->getData();
             $chat->setOwner($user);
+            $chat->setStatus(Channel::STATUS_ACTIVE);
 
             $em->persist($chat);
             $em->flush();
@@ -61,7 +63,7 @@ class ChatController extends Controller
     public function viewAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $chat = $em->getRepository('AppBundle:Chat')->find($id);
+        $chat = $em->getRepository(Channel::class)->find($id);
 
         if ($chat === null) {
             throw $this->createNotFoundException('This chat does not exist');
@@ -101,8 +103,8 @@ class ChatController extends Controller
             ]));
         }
 
-        $messages = $em->getRepository('AppBundle:Message')->findMessagesInChannel($id);
-        $users = $em->getRepository('AppBundle:User')->findUsersInChannel($id);
+        $messages = $em->getRepository(Message::class)->findMessagesInChannel($id);
+        $users = $em->getRepository(User::class)->findUsersInChannel($id);
 
         return $this->render(':chat:view.html.twig', [
             'chat' => $chat,

@@ -5,37 +5,37 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ChatroomJoinRepository")
- * @ORM\Table(name="Chatroom_Join")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ChannelJoinRepository")
+ * @ORM\Table()
  */
-class ChatroomJoin
+class ChannelJoin
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="Join_ID")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false, name="Join_Time")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $join_time;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true, name="End_Time")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $part_time;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(name="User_ID", referencedColumnName="User_ID", nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Chat")
-     * @ORM\JoinColumn(name="Chat_ID", referencedColumnName="Chat_ID", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Channel")
+     * @ORM\JoinColumn(name="chat_id", referencedColumnName="id", nullable=false)
      */
     private $chat;
 
@@ -59,7 +59,7 @@ class ChatroomJoin
      *
      * @param \DateTime $joinTime
      *
-     * @return ChatroomJoin
+     * @return ChannelJoin
      */
     public function setJoinTime($joinTime)
     {
@@ -83,7 +83,7 @@ class ChatroomJoin
      *
      * @param \DateTime $partTime
      *
-     * @return ChatroomJoin
+     * @return ChannelJoin
      */
     public function setPartTime($partTime)
     {
@@ -107,7 +107,7 @@ class ChatroomJoin
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return ChatroomJoin
+     * @return ChannelJoin
      */
     public function setUser(\AppBundle\Entity\User $user)
     {
@@ -129,11 +129,11 @@ class ChatroomJoin
     /**
      * Set chat.
      *
-     * @param \AppBundle\Entity\Chat $chat
+     * @param \AppBundle\Entity\Channel $chat
      *
-     * @return ChatroomJoin
+     * @return ChannelJoin
      */
-    public function setChat(\AppBundle\Entity\Chat $chat)
+    public function setChat(\AppBundle\Entity\Channel $chat)
     {
         $this->chat = $chat;
 
@@ -143,7 +143,7 @@ class ChatroomJoin
     /**
      * Get chat.
      *
-     * @return \AppBundle\Entity\Chat
+     * @return \AppBundle\Entity\Channel
      */
     public function getChat()
     {

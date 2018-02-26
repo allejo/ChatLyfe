@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Chat;
+use AppBundle\Entity\Channel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,7 +33,7 @@ class ChatFormType extends AbstractType
     public function configureOptions (OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Chat::class
+            'data_class' => Channel::class
         ]);
     }
 

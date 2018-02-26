@@ -7,29 +7,29 @@ use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @ORM\Table(name="User")
+ * @ORM\Table()
  */
 class User extends BaseUser
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="User_ID")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true, name="First_Name")
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $first_name;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true, name="Last_Name")
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $last_name;
 
     /**
-     * @ORM\Column(type="smallint", nullable=false, name="Status", options={"default" = 1, "unsigned" = true})
+     * @ORM\Column(type="smallint", nullable=false, options={"default" = 1, "unsigned" = true})
      */
     protected $status;
 
