@@ -5,30 +5,34 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ChatRepository")
- * @ORM\Table(name="Chat")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ChannelRepository")
+ * @ORM\Table()
  */
-class Chat
+class Channel
 {
+    const STATUS_ACTIVE = 0;
+    const STATUS_DELETED = 1;
+    const STATUS_PENDING = 2;
+
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="Chat_ID")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", unique=true, length=32, nullable=false, name="Chat_Name")
+     * @ORM\Column(type="string", unique=true, length=32, nullable=false)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true, name="Chat_Topic")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $topic;
 
     /**
-     * @ORM\Column(type="smallint", length=2, nullable=false, name="Status", options={"default" = 1, "unsigned" = true})
+     * @ORM\Column(type="smallint", length=2, nullable=false, options={"default" = 1, "unsigned" = true})
      */
     private $status;
 
@@ -36,6 +40,13 @@ class Chat
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="chat")
      */
     private $messages;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="creator_id", referencedColumnName="id", nullable=true)
+     * @var User
+     */
+    private $owner;
 
     /**
      * Constructor.
@@ -60,7 +71,7 @@ class Chat
      *
      * @param string $topic
      *
-     * @return Chat
+     * @return Channel
      */
     public function setTopic($topic)
     {
@@ -84,7 +95,7 @@ class Chat
      *
      * @param int $status
      *
-     * @return Chat
+     * @return Channel
      */
     public function setStatus($status)
     {
@@ -108,7 +119,7 @@ class Chat
      *
      * @param \AppBundle\Entity\Message $message
      *
-     * @return Chat
+     * @return Channel
      */
     public function addMessage(\AppBundle\Entity\Message $message)
     {
@@ -142,7 +153,7 @@ class Chat
      *
      * @param string $name
      *
-     * @return Chat
+     * @return Channel
      */
     public function setName($name)
     {
@@ -159,5 +170,21 @@ class Chat
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param User $owner
+     */
+    public function setOwner(User $owner)
+    {
+        $this->owner = $owner;
     }
 }

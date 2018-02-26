@@ -6,13 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DirectMessageRepository")
- * @ORM\Table(name="Direct_Message")
+ * @ORM\Table()
  */
 class DirectMessage
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="Msg_ID")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -24,13 +24,13 @@ class DirectMessage
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(name="User_A", referencedColumnName="User_ID", nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
      */
     private $user_a;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(name="User_B", referencedColumnName="User_ID", nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
      */
     private $user_b;
 

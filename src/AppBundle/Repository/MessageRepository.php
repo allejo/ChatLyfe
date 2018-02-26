@@ -12,8 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessageRepository extends EntityRepository
 {
-    public function findMessagesInChannel($channelID)
+    /**
+     * @param int $channelID The ID of the channel we're fetching
+     * @param int $page      The page of messages we're getting
+     *
+     * @return mixed
+     */
+    public function findMessagesInChannel($channelID, $page = 1)
     {
+        $messagePerPage = 50;
+
         $qb = $this->createQueryBuilder('m')
             ->andWhere('m.chat = :id')
             ->setParameter('id', $channelID)

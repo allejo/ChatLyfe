@@ -12,6 +12,9 @@
             </aside>
 
             <div class="col-sm-9">
+                <div class="text-right">
+                    <a href="{{ path('create_chat') }}" class="btn btn-primary">Create Channel</a>
+                </div>
                 <div class="row">
                     {% for channel in allChannels %}
                         <div class="col-sm-3">

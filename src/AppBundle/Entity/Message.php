@@ -6,47 +6,47 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MessageRepository")
- * @ORM\Table(name="Message")
+ * @ORM\Table()
  */
 class Message
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="Msg_ID")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="text", nullable=false, name="Message")
+     * @ORM\Column(type="text", nullable=false)
      */
     private $message;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false, name="Timestamp")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $timestamp;
 
     /**
-     * @ORM\Column(type="smallint", nullable=false, name="Status", options={"default" = 1})
+     * @ORM\Column(type="smallint", nullable=false, options={"default" = 1})
      */
     private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(name="Author_ID", referencedColumnName="User_ID", nullable=false)
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
      */
     private $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Chat", inversedBy="messages")
-     * @ORM\JoinColumn(name="Chat_ID", referencedColumnName="Chat_ID")
+     * @ORM\ManyToOne(targetEntity="Channel", inversedBy="messages")
+     * @ORM\JoinColumn(name="chat_id", referencedColumnName="id")
      */
     private $chat;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DirectMessage", inversedBy="messages")
-     * @ORM\JoinColumn(name="Direct_Message_ID", referencedColumnName="Msg_ID")
+     * @ORM\JoinColumn(name="direct_message_id", referencedColumnName="id")
      */
     private $direct_message;
 
@@ -165,11 +165,11 @@ class Message
     /**
      * Set chat.
      *
-     * @param \AppBundle\Entity\Chat $chat
+     * @param \AppBundle\Entity\Channel $chat
      *
      * @return Message
      */
-    public function setChat(\AppBundle\Entity\Chat $chat = null)
+    public function setChat(\AppBundle\Entity\Channel $chat = null)
     {
         $this->chat = $chat;
 
@@ -179,7 +179,7 @@ class Message
     /**
      * Get chat.
      *
-     * @return \AppBundle\Entity\Chat
+     * @return \AppBundle\Entity\Channel
      */
     public function getChat()
     {

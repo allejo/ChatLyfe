@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Channel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +29,8 @@ class DefaultController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $allChannels = $em->getRepository('AppBundle:Chat')->findBy([
-            'status' => 1,
+        $allChannels = $em->getRepository(Channel::class)->findBy([
+            'status' => Channel::STATUS_ACTIVE,
         ]);
 
         return $this->render(':home:index-auth.html.twig', array(
