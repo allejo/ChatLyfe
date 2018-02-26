@@ -30,7 +30,7 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $allChannels = $em->getRepository(Channel::class)->findBy([
-            'status' => 1,
+            'status' => Channel::STATUS_ACTIVE,
         ]);
 
         return $this->render(':home:index-auth.html.twig', array(
