@@ -47,7 +47,11 @@
                             <input class="form-check-input" type="checkbox" id="remember_me" name="_remember_me" value="on" />
                             <label class="form-check-label" for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
                         </div>
-
+						
+						<a href="{{ path("fos_user_resetting_request") }}">
+							Forgot Password 
+						</a>
+						
                         <input class="btn btn-secondary btn-chatlyfe"
                                type="submit"
                                id="_submit"
