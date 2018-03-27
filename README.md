@@ -53,20 +53,6 @@ During the initial deployment of the website, it's necessary to setup ACL for th
 bash app/setup-acl.sh
 ```
 
-Regular deployment and updates to the website can be done through the `deploy.sh` script. The script will pull from Git and update the necessary files.
-
-To update the production website, use the `--prod` flag.
-
-```bash
-bash deploy.sh --prod
-```
-
-To update the staging environment, run the script without the flag.
-
-```bash
-bash deploy.sh
-```
-
 ## Branching
 
 The `master` branch should reflect what is deployed to the production site and the `develop` branch should reflect what is on the staging site.
