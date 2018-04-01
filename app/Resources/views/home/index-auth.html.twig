@@ -1,32 +1,23 @@
-{% extends 'base.html.twig' %}
+{% extends ':layouts:user-sidebar.html.twig' %}
 
 {% block title %}
     ChatLyfe - Enjoy your chat with everyone
 {% endblock %}
 
-{% block body %}
-    <div class="container-fluid py-2">
-        <div class="row content">
-            <aside class="col-sm-3 hidden-xs">
-                {% include '::navbar.html.twig' with { myChannels: myChannels } %}
-            </aside>
-
-            <div class="col-sm-9">
-                <div class="text-right">
-                    <a href="{{ path('create_chat') }}" class="btn btn-primary">Create Channel</a>
-                </div>
-                <div class="row">
-                    {% for channel in allChannels %}
-                        <div class="col-sm-3">
-                            <a href="{{ path('view_chat', { id: channel.id }) }}"
-                               class="btn btn-primary--chatlyfe text-center mb-3 py-3 d-block"
-                            >
-                                <p class="m-0"><strong>{{ channel.name }}</strong></p>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+{% block layout_body %}
+    <div class="border-bottom pb-2 mb-3 text-right">
+        <a href="{{ path('create_chat') }}" class="btn btn-primary">Create Channel</a>
+    </div>
+    <div>
+        {% for channel in allChannels %}
+            <article class="border-bottom">
+                <a href="{{ path('view_chat', { id: channel.id }) }}"
+                   class="mb-3 py-3 d-block"
+                >
+                    <p class="m-0"><strong>#{{ channel.name | lower}}</strong></p>
+                    <p class="m-0">{{ channel.topic }}</p>
+                </a>
+            </article>
+        {% endfor %}
     </div>
 {% endblock %}
