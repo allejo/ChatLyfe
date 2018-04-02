@@ -9,10 +9,11 @@
             <div class="row mb-3">
                 <div class="col-md-10">
                     <section class="c-messenger__viewer">
+                        <div class="fetch-backlog text-center">
+                            <a href="#">Fetch More Messages...</a>
+                        </div>
                         <div class="chat-messages-text" id="chat-view">
-                            {% for message in messages %}
-                                {% include ':chat:message.html.twig' with { message: message } %}
-                            {% endfor %}
+                            {% include ':chat:messages.html.twig' with { messages: messages } %}
                         </div>
                     </section>
                 </div>
