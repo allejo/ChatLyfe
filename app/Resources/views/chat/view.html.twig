@@ -61,6 +61,8 @@
 
         var channel = pusher.subscribe('{{ pusher.channel }}');
         channel.bind('message_sent', function(data) {
+            console.log('toast');
+            console.log(data);
             $('#chat-view').append(data.message);
         });
     </script>
@@ -74,9 +76,7 @@
             // Reset the input value to empty after the message has been serialized
             $('#app_bundle_message_form_type_message').val('');
 
-            $.post(url, formSerialize, function (response) {
-                console.log(response);
-            }, 'JSON');
+            $.post(url, formSerialize);
         });
     </script>
 {% endblock %}

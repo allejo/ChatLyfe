@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessageRepository extends EntityRepository
 {
+    const BACKLOG_COUNT = 50;
+
     /**
      * @param int $channelID The ID of the channel we're fetching
      * @param int $page      The page of messages we're getting
@@ -20,14 +22,30 @@ class MessageRepository extends EntityRepository
      */
     public function findMessagesInChannel($channelID, $page = 1)
     {
-        $messagePerPage = 50;
-
         $qb = $this->createQueryBuilder('m')
             ->andWhere('m.chat = :id')
             ->setParameter('id', $channelID)
             ->andWhere('m.status = 1')
             ->orderBy('m.timestamp', 'DESC')
             ->setMaxResults(50)
+        ;
+
+        return $qb->getQuery()->execute();
+    }
+
+    public function findMessagesInChannelBefore($channelID, $last_msg)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->andWhere('m.chat = :id')
+            ->andWhere('m.id < :last_msg')
+            ->andWhere('m.status = :status')
+            ->setParameters([
+                'id' => $channelID,
+                'last_msg' => $last_msg,
+                'status' => 1,
+            ])
+            ->orderBy('m.timestamp', 'ASC')
+            ->setMaxResults(self::BACKLOG_COUNT)
         ;
 
         return $qb->getQuery()->execute();

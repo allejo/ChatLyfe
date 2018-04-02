@@ -6,6 +6,7 @@ use AppBundle\Entity\Channel;
 use AppBundle\Entity\Message;
 use AppBundle\Entity\User;
 use AppBundle\Form\ChatFormType;
+use AppBundle\Form\MessageFormType;
 use Pusher\Pusher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -73,7 +74,7 @@ class ChatController extends Controller
             throw $this->createAccessDeniedException('You must be logged in to use this functionality.');
         }
 
-        $form = $this->createForm('AppBundle\Form\MessageFormType');
+        $form = $this->createForm(MessageFormType::class);
 
         $form->handleRequest($request);
 
@@ -93,7 +94,7 @@ class ChatController extends Controller
                 ]));
             }
 
-            $this->sendPusherEvent($message, $id);
+            $this->sendPusherEvent($message, $request->getHost(), $id);
 
             $em->persist($message);
             $em->flush();
@@ -113,9 +114,24 @@ class ChatController extends Controller
             'form' => $form->createView(),
             'pusher' => [
                 'key' => $this->getParameter('pusher_key'),
-                'channel' => sprintf('chats_%d', $id),
+                'channel' => sprintf('%s_chats_%d', $request->getHost(), $id),
             ],
         ]);
+    }
+
+    /**
+     * @Route("/backlog/{id}/{last_msg}", name="backlog_chat")
+     */
+    public function backlogAction(Request $request, $id, $last_msg)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $messages = $em->getRepository(Message::class)->findMessagesInChannelBefore($id, $last_msg);
+
+        $html = $this->renderView(':chat:messages.html.twig', [
+            'messages' => $messages,
+        ]);
+
+        return new JsonResponse(compact('html'));
     }
 
     /**
@@ -123,7 +139,7 @@ class ChatController extends Controller
      *
      * @param int $channelID
      */
-    private function sendPusherEvent(Message $message, $channelID)
+    private function sendPusherEvent(Message $message, $host, $channelID)
     {
         $data = [
             'message' => $this->renderView(':chat:message.html.twig', [
@@ -134,7 +150,7 @@ class ChatController extends Controller
         /** @var Pusher $pusher */
         $pusher = $this->get('pusher');
         $pusher->trigger(
-            sprintf('chats_%d', $channelID),
+            sprintf('%s_chats_%d', $host, $channelID),
             'message_sent',
             $data
         );
