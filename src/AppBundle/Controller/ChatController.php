@@ -107,6 +107,7 @@ class ChatController extends Controller
         $users = $em->getRepository(User::class)->findUsersInChannel($id);
 
         return $this->render(':chat:view.html.twig', [
+            'directMessage' => false,
             'chat' => $chat,
             'messages' => array_reverse($messages),
             'users' => $users,
@@ -117,6 +118,49 @@ class ChatController extends Controller
             ],
         ]);
     }
+
+/***************************************************************************/
+/***************************************************************************/
+/********make correct route for direct chat**************************/
+    /*
+     * @Route("/direct/{id}", name="create_directchat")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+
+public function createDirectaction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+/*******/
+        $form = $this->createForm(DirectMessageFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $form->isSubmitted()) {
+            /** @var DirectMessage $directMessage */
+            $chat = $form->getData();
+            $chat->setOwner($user);
+            $chat->setStatus(Channel::STATUS_ACTIVE);
+
+            $em->persist($chat);
+            $em->flush();
+
+            return $this->redirectToRoute('view_chat', [
+                'id' => $chat->getId(),
+            ]);
+        }
+
+        return $this->render(':chat:create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+  
+
+/******************Dont touch this one Kevin********************************/
+/***************************************************************************/
 
     /**
      * Send a Pusher event to all connected clients on this channel.
