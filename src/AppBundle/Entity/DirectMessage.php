@@ -35,6 +35,11 @@ class DirectMessage
     private $user_b;
 
     /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    private $timestamp;
+
+     /**
      * Constructor.
      */
     public function __construct()
@@ -132,5 +137,29 @@ class DirectMessage
     public function getUserB()
     {
         return $this->user_b;
+    }
+
+    /**
+     * Set timestamp.
+     *
+     * @param \DateTime $timestamp
+     *
+     * @return Message
+     */
+    public function setTimestamp($timestamp)
+    {
+        $this->timestamp = $timestamp;
+
+        return $this;
+    }
+
+    /**
+     * Get timestamp.
+     *
+     * @return \DateTime
+     */
+    public function getTimestamp()
+    {
+        return $this->timestamp;
     }
 }
