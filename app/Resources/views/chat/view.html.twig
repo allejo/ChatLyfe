@@ -70,13 +70,12 @@
         $('form[name="app_bundle_message_form_type"]').submit(function (e) {
             e.preventDefault();
 
-            var url = "{{ path('view_chat', { id: chat.id }) }}";
             var formSerialize = $(this).serialize();
 
             // Reset the input value to empty after the message has been serialized
             $('#app_bundle_message_form_type_message').val('');
 
-            $.post(url, formSerialize, function (response) {
+            $.post(window.location.href, formSerialize, function (response) {
                 console.log(response);
             }, 'JSON');
         });

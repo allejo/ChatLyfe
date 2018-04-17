@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Message
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 0;
+    const STATUS_PENDING = 2;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -42,17 +46,17 @@ class Message
      * @ORM\ManyToOne(targetEntity="Channel", inversedBy="messages")
      * @ORM\JoinColumn(name="chat_id", referencedColumnName="id")
      */
-    private $chat;
+    private $channel;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DirectMessage", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="direct_message_id", referencedColumnName="id")
      */
     private $direct_message;
 
     public function __construct()
     {
-        $this->status = 1;
+        $this->status = self::STATUS_ACTIVE;
         $this->timestamp = new \DateTime();
     }
 
@@ -165,13 +169,13 @@ class Message
     /**
      * Set chat.
      *
-     * @param \AppBundle\Entity\Channel $chat
+     * @param \AppBundle\Entity\Channel $channel
      *
      * @return Message
      */
-    public function setChat(\AppBundle\Entity\Channel $chat = null)
+    public function setChannel(\AppBundle\Entity\Channel $channel = null)
     {
-        $this->chat = $chat;
+        $this->channel = $channel;
 
         return $this;
     }
@@ -181,19 +185,19 @@ class Message
      *
      * @return \AppBundle\Entity\Channel
      */
-    public function getChat()
+    public function getChannel()
     {
-        return $this->chat;
+        return $this->channel;
     }
 
     /**
      * Set directMessage.
      *
-     * @param \AppBundle\Entity\DirectMessage $directMessage
+     * @param \AppBundle\Entity\User $directMessage
      *
      * @return Message
      */
-    public function setDirectMessage(\AppBundle\Entity\DirectMessage $directMessage = null)
+    public function setDirectMessage(\AppBundle\Entity\User $directMessage = null)
     {
         $this->direct_message = $directMessage;
 
@@ -203,7 +207,7 @@ class Message
     /**
      * Get directMessage.
      *
-     * @return \AppBundle\Entity\DirectMessage
+     * @return \AppBundle\Entity\User
      */
     public function getDirectMessage()
     {

@@ -37,7 +37,7 @@ class Channel
     private $status;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="chat")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="channel")
      */
     private $messages;
 

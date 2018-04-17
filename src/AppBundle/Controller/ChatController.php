@@ -6,6 +6,8 @@ use AppBundle\Entity\Channel;
 use AppBundle\Entity\Message;
 use AppBundle\Entity\User;
 use AppBundle\Form\ChatFormType;
+use AppBundle\Form\MessageFormType;
+use AppBundle\Repository\MessageRepository;
 use Pusher\Pusher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -82,7 +84,7 @@ class ChatController extends Controller
             $message = $form->getData();
             $message
                 ->setAuthor($this->getUser())
-                ->setChat($chat)
+                ->setChannel($chat)
             ;
 
             // Don't send out the message if it's an empty message
@@ -119,48 +121,56 @@ class ChatController extends Controller
         ]);
     }
 
-/***************************************************************************/
-/***************************************************************************/
-/********make correct route for direct chat**************************/
-    /*
+    /**
      * @Route("/direct/{id}", name="create_directchat")
      *
      * @param Request $request
      *
      * @return Response
      */
-
-public function createDirectaction(Request $request, $id)
+    public function createDirectAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-/*******/
-        $form = $this->createForm(DirectMessageFormType::class);
+        $targetUser = $em->getRepository(User::class)->find($id);
+
+        if (!$targetUser) {
+            throw $this->createNotFoundException('The user you are trying to message does not exist');
+        }
+
+        $form = $this->createForm(MessageFormType::class);
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-            /** @var DirectMessage $directMessage */
-            $chat = $form->getData();
-            $chat->setOwner($user);
-            $chat->setStatus(Channel::STATUS_ACTIVE);
+            /** @var Message $message */
+            $message = $form->getData();
+            $message->setAuthor($user);
+            $message->setDirectMessage($targetUser);
 
-            $em->persist($chat);
+            $this->sendDirectMessagePusherEvent($message, $user->getId(), $targetUser->getId());
+
+            $em->persist($message);
             $em->flush();
 
-            return $this->redirectToRoute('view_chat', [
-                'id' => $chat->getId(),
-            ]);
+            return (new JsonResponse([
+                'status' => 'success',
+            ]));
         }
 
-        return $this->render(':chat:create.html.twig', [
+        $messages = $em->getRepository(Message::class)->findMessagesInDirectChat($user, $targetUser);
+
+        return $this->render(':chat:view.html.twig', [
+            'directMessage' => true,
+            'chat' => null,
+            'messages' => array_reverse($messages),
+            'users' => [],
             'form' => $form->createView(),
+            'pusher' => [
+                'key' => $this->getParameter('pusher_key'),
+                'channel' => sprintf('chats_%d', $id),
+            ],
         ]);
     }
-
-  
-
-/******************Dont touch this one Kevin********************************/
-/***************************************************************************/
 
     /**
      * Send a Pusher event to all connected clients on this channel.
@@ -179,6 +189,31 @@ public function createDirectaction(Request $request, $id)
         $pusher = $this->get('pusher');
         $pusher->trigger(
             sprintf('chats_%d', $channelID),
+            'message_sent',
+            $data
+        );
+    }
+
+    /**
+     * Send a Pusher event to all connected clients on this channel.
+     *
+     * @param int $channelID
+     */
+    private function sendDirectMessagePusherEvent(Message $message, $user_a, $user_b)
+    {
+        $data = [
+            'message' => $this->renderView(':chat:message.html.twig', [
+                'message' => $message,
+            ])
+        ];
+
+        $firstUser = ($aFirst = ($user_b > $user_a)) ? $user_a : $user_b;
+        $secondUser = ($aFirst) ? $user_b : $user_a;
+
+        /** @var Pusher $pusher */
+        $pusher = $this->get('pusher');
+        $pusher->trigger(
+            sprintf('dm_%d_%d', $firstUser, $secondUser),
             'message_sent',
             $data
         );
