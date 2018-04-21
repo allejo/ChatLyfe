@@ -14,7 +14,7 @@
                     <section class="c-messenger__viewer">
                         <div class="chat-messages-text" id="chat-view">
                             {% for message in messages %}
-                                {% include ':chat:message.html.twig' with { message: message } %}
+                                {% include ':chat:message.html.twig' with { message: message, pm: directMessage } %}
                             {% endfor %}
                         </div>
                     </section>

@@ -122,7 +122,7 @@ class ChatController extends Controller
     }
 
     /**
-     * @Route("/direct/{id}", name="create_directchat")
+     * @Route("/direct/{id}", name="direct_chat")
      *
      * @param Request $request
      *
@@ -147,7 +147,7 @@ class ChatController extends Controller
             $message->setAuthor($user);
             $message->setDirectMessage($targetUser);
 
-            $this->sendDirectMessagePusherEvent($message, $user->getId(), $targetUser->getId());
+            $this->sendDirectMessagePusherEvent($message, $user, $targetUser);
 
             $em->persist($message);
             $em->flush();
@@ -167,7 +167,7 @@ class ChatController extends Controller
             'form' => $form->createView(),
             'pusher' => [
                 'key' => $this->getParameter('pusher_key'),
-                'channel' => sprintf('chats_%d', $id),
+                'channel' => $this->dmChannelName($user, $targetUser),
             ],
         ]);
     }
@@ -182,11 +182,13 @@ class ChatController extends Controller
         $data = [
             'message' => $this->renderView(':chat:message.html.twig', [
                 'message' => $message,
+                'pm' => false,
             ])
         ];
 
         /** @var Pusher $pusher */
         $pusher = $this->get('pusher');
+        $pusher->set_logger($this->get('logger'));
         $pusher->trigger(
             sprintf('chats_%d', $channelID),
             'message_sent',
@@ -204,18 +206,31 @@ class ChatController extends Controller
         $data = [
             'message' => $this->renderView(':chat:message.html.twig', [
                 'message' => $message,
+                'pm' => true,
             ])
         ];
 
-        $firstUser = ($aFirst = ($user_b > $user_a)) ? $user_a : $user_b;
-        $secondUser = ($aFirst) ? $user_b : $user_a;
-
         /** @var Pusher $pusher */
         $pusher = $this->get('pusher');
+        $pusher->set_logger($this->get('logger'));
         $pusher->trigger(
-            sprintf('dm_%d_%d', $firstUser, $secondUser),
+            $this->dmChannelName($user_a, $user_b),
             'message_sent',
             $data
         );
+    }
+
+    /**
+     * @param User $user_a
+     * @param User $user_b
+     *
+     * @return string
+     */
+    private function dmChannelName($user_a, $user_b)
+    {
+        $firstUser = ($aFirst = ($user_b->getId() > $user_a->getId())) ? $user_a->getId() : $user_b->getId();
+        $secondUser = ($aFirst) ? $user_b->getId() : $user_a->getId();
+
+        return sprintf('dm_%d_%d', $firstUser, $secondUser);
     }
 }
