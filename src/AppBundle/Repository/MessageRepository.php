@@ -23,9 +23,23 @@ class MessageRepository extends EntityRepository
         $messagePerPage = 50;
 
         $qb = $this->createQueryBuilder('m')
-            ->andWhere('m.chat = :id')
+            ->andWhere('m.channel = :id')
             ->setParameter('id', $channelID)
             ->andWhere('m.status = 1')
+            ->orderBy('m.timestamp', 'DESC')
+            ->setMaxResults(50)
+        ;
+
+        return $qb->getQuery()->execute();
+    }
+
+    public function findMessagesInDirectChat($user_a, $user_b, $page = 1)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->where('m.author = :user_a OR m.author = :user_b')
+            ->andWhere('m.direct_message = :user_a OR m.direct_message = :user_b')
+            ->setParameter('user_a', $user_a)
+            ->setParameter('user_b', $user_b)
             ->orderBy('m.timestamp', 'DESC')
             ->setMaxResults(50)
         ;

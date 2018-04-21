@@ -4,14 +4,17 @@
     <div class="container-fluid s-messenger">
         <section class="c-messenger">
             <header class="c-messenger__header border border-top-0 border-left-0 border-right-0 mb-3 py-3">
-                <strong>{{ chat.name }}</strong> :: {{ chat.topic }}
+                {% if directMessage %}
+                {% else %}
+                    <strong>{{ chat.name }}</strong> :: {{ chat.topic }}
+                {% endif %}
             </header>
             <div class="row mb-3">
                 <div class="col-md-10">
                     <section class="c-messenger__viewer">
                         <div class="chat-messages-text" id="chat-view">
                             {% for message in messages %}
-                                {% include ':chat:message.html.twig' with { message: message } %}
+                                {% include ':chat:message.html.twig' with { message: message, pm: directMessage } %}
                             {% endfor %}
                         </div>
                     </section>
@@ -19,7 +22,7 @@
                 <div class="col-md-2 border border-top-0 border-bottom-0 border-right-0">
                     <ul>
                         {% for user in users %}
-                            <li>{{ user.user.username }}</li>
+                            <li>{{ user.username }}</li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -67,13 +70,12 @@
         $('form[name="app_bundle_message_form_type"]').submit(function (e) {
             e.preventDefault();
 
-            var url = "{{ path('view_chat', { id: chat.id }) }}";
             var formSerialize = $(this).serialize();
 
             // Reset the input value to empty after the message has been serialized
             $('#app_bundle_message_form_type_message').val('');
 
-            $.post(url, formSerialize, function (response) {
+            $.post(window.location.href, formSerialize, function (response) {
                 console.log(response);
             }, 'JSON');
         });
