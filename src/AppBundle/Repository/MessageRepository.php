@@ -36,8 +36,8 @@ class MessageRepository extends EntityRepository
     public function findMessagesInDirectChat($user_a, $user_b, $page = 1)
     {
         $qb = $this->createQueryBuilder('m')
-            ->where('m.author = :user_a OR m.author = :user_b')
-            ->andWhere('m.direct_message = :user_a OR m.direct_message = :user_b')
+            ->where('m.author = :user_a AND m.direct_message = :user_b')
+            ->orWhere('m.author = :user_b AND m.direct_message = :user_a')
             ->setParameter('user_a', $user_a)
             ->setParameter('user_b', $user_b)
             ->orderBy('m.timestamp', 'DESC')
