@@ -1,33 +1,24 @@
-{% extends '::base.html.twig' %}
+{% extends ':layouts:user-sidebar.html.twig' %}
 
-{% block body %}
-    <div class="container-fluid s-messenger">
+{% block layout_body %}
+    <div class="s-messenger">
         <section class="c-messenger">
-            <header class="c-messenger__header border border-top-0 border-left-0 border-right-0 mb-3 py-3">
+            <header class="c-messenger__header border-bottom pb-2">
                 {% if directMessage %}
                 {% else %}
                     <strong>{{ chat.name }}</strong> :: {{ chat.topic }}
                 {% endif %}
             </header>
-            <div class="row mb-3">
-                <div class="col-md-10">
-                    <section class="c-messenger__viewer">
-                        <div class="chat-messages-text" id="chat-view">
-                            {% for message in messages %}
-                                {% include ':chat:message.html.twig' with { message: message, pm: directMessage } %}
-                            {% endfor %}
-                        </div>
-                    </section>
+
+            <section class="c-messenger__viewer">
+                <div class="chat-messages-text" id="chat-view">
+                    {% for message in messages %}
+                        {% include ':chat:message.html.twig' with { message: message, pm: directMessage } %}
+                    {% endfor %}
                 </div>
-                <div class="col-md-2 border border-top-0 border-bottom-0 border-right-0">
-                    <ul>
-                        {% for user in users %}
-                            <li>{{ user.username }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <section class="c-messenger__input border border-bottom-0 border-left-0 border-right-0 py-3">
+            </section>
+
+            <section class="c-messenger__input border-top mt-2 pt-3">
                 <div class="row">
                     <div class="col-md-10">
                         {{ form_start(form, { attr: { class: 'form-inline' } }) }}

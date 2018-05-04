@@ -5360,7 +5360,7 @@ a.text-dark:hover,a.text-dark:focus {
 }
 
 .s-messenger {
-  height: 100vh;
+  height: 100%;
 }
 
 .c-messenger {
@@ -5376,6 +5376,10 @@ a.text-dark:hover,a.text-dark:focus {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.c-messenge__author {
+  font-size: 0.9em;
 }
 
 .welcome-text {
@@ -5400,6 +5404,10 @@ a.text-dark:hover,a.text-dark:focus {
 
 .text-size-65 {
   font-size: 65px;
+}
+
+.full-height {
+  height: 100vh;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {

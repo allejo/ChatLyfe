@@ -1,13 +1,20 @@
-<div class="row">
-    <div class="col-md-2">
+<div class="c-message">
+    <p class="c-messenge__author mb-0 strong">
         {% if pm %}
             {{ message.author.username }}
         {% else %}
             <a href="{{ url('direct_chat', { id: message.author.id }) }}">{{ message.author.username }}</a>
         {% endif %}
-    </div>
-    <div class="col-md-8">{{ message.message }}</div>
-    <div class="col-md-2 text-right">
-        <span title="{{ message.timestamp | date('M d, Y h:m:ia') }}">{{ message.timestamp | date('h:ma') }}</span>
+    </p>
+
+    <div class="row mb-1">
+        <div class="col-md-10">
+            {{ message.message }}
+        </div>
+        <div class="col-md-2 text-right text-muted">
+            <small>
+                <span title="{{ message.timestamp | date('M d, Y h:m:ia') }}">{{ message.timestamp | date('h:ma') }}</span>
+            </small>
+        </div>
     </div>
 </div>

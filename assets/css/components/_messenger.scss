@@ -1,5 +1,5 @@
 .s-messenger {
-    height: 100vh;
+    height: 100%;
 }
 
 .c-messenger {
@@ -15,4 +15,8 @@
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+.c-messenge__author {
+    font-size: 0.9em;
 }
