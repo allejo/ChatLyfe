@@ -188,7 +188,6 @@ class ChatController extends Controller
 
         /** @var Pusher $pusher */
         $pusher = $this->get('pusher');
-        $pusher->set_logger($this->get('logger'));
         $pusher->trigger(
             sprintf('chats_%d', $channelID),
             'message_sent',
@@ -212,7 +211,6 @@ class ChatController extends Controller
 
         /** @var Pusher $pusher */
         $pusher = $this->get('pusher');
-        $pusher->set_logger($this->get('logger'));
         $pusher->trigger(
             $this->dmChannelName($user_a, $user_b),
             'message_sent',

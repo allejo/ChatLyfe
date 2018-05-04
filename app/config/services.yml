@@ -11,6 +11,7 @@ services:
             $id: '%pusher_id%'
             $key: '%pusher_key%'
             $secret: '%pusher_secret%'
+            $logger: '@logger'
 
     fos_user_registration:
         class: 'AppBundle\EventListener\RegistrationConfirmationListener'

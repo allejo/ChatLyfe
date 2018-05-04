@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f911e065aea534d8a7c069cbc9d80cc3",
+    "content-hash": "01043ffb51ffac22937617574e65690a",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1682,16 +1682,16 @@
         },
         {
             "name": "pusher/pusher-php-server",
-            "version": "dev-feature/psr-3",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/allejo/pusher-http-php.git",
-                "reference": "5b2859a30880bf0497607d96509c3629296fb777"
+                "url": "https://github.com/pusher/pusher-http-php.git",
+                "reference": "e4f6980fa69699945873f0895de8c5a14e7244e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/allejo/pusher-http-php/zipball/5b2859a30880bf0497607d96509c3629296fb777",
-                "reference": "5b2859a30880bf0497607d96509c3629296fb777",
+                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/e4f6980fa69699945873f0895de8c5a14e7244e7",
+                "reference": "e4f6980fa69699945873f0895de8c5a14e7244e7",
                 "shasum": ""
             },
             "require": {
@@ -1713,6 +1713,7 @@
                     "Pusher\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1730,10 +1731,7 @@
                 "rest",
                 "trigger"
             ],
-            "support": {
-                "source": "https://github.com/allejo/pusher-http-php/tree/feature/psr-3"
-            },
-            "time": "2018-04-04 18:32:19"
+            "time": "2018-04-26T09:54:45+00:00"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -4121,9 +4119,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "pusher/pusher-php-server": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
