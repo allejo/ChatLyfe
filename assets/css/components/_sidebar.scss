@@ -1,0 +1,31 @@
+.c-sidebar {
+    background-color: #1b1b1b;
+    height: 100vh;
+    padding: 0;
+}
+
+.c-sidebar__user {
+    padding: 15px 0;
+
+    a {
+        $_link_color: #b3e2ff;
+
+        color: $_link_color;
+        font-size: 1.5em;
+        display: block;
+        padding: 15px;
+
+        &:hover {
+            background-color: rgba(#fff, .15);
+            color: darken($_link_color, 30%);
+        }
+    }
+}
+
+.c-sidebar__channels {
+    background-color: #363636;
+    color: #ffffff;
+    height: 100vh;
+    padding: 30px 15px;
+    width: 200px;
+}

@@ -8,14 +8,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% block stylesheets %}{% endblock %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
     </head>
     <body>
         {% block body %}{% endblock %}
 
         {% if app.debug %}
-            <script src="{{ app.request.schemeAndHTTPHost }}:35729/livereload.js"></script>
+            <script src="{{ app.request.schemeAndHTTPHost | replace({ ':8000': '' }) }}:35729/livereload.js"></script>
         {% endif %}
 
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
