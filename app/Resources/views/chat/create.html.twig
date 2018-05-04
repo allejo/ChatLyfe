@@ -1,5 +1,9 @@
-{% extends '::base.html.twig' %}
+{% extends ':layouts:user-sidebar.html.twig' %}
 
-{% block body %}
+{% block layout_body %}
+    <h2>Create A Channel</h2>
+
+    <p>Got a topic you'd like to chat about but one doesn't exist yet? Create a channel for it!</p>
+
     {{ form(form) }}
 {% endblock %}
