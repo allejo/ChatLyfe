@@ -5321,6 +5321,14 @@ a.text-dark:hover,a.text-dark:focus {
   border-color: transparent;
 }
 
+.c-channel:hover {
+  background-color: #9bbeff;
+}
+
+.c-channel:hover a {
+  text-decoration: none;
+}
+
 .c-sidebar {
   background-color: #1b1b1b;
   height: 100vh;

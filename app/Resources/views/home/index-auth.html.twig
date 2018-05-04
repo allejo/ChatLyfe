@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block layout_body %}
-    <div class="border-bottom pb-2 mb-3 text-right">
+    <div class="border-bottom pb-4 mb-0 text-right">
         <a href="{{ path('create_chat') }}" class="btn btn-primary">Create Channel</a>
     </div>
     <div>
         {% for channel in allChannels %}
-            <article class="border-bottom">
+            <article class="c-channel border-bottom px-2">
                 <a href="{{ path('view_chat', { id: channel.id }) }}"
-                   class="mb-3 py-3 d-block"
+                   class="py-1 d-block"
                 >
                     <p class="m-0"><strong>#{{ channel.name | lower}}</strong></p>
                     <p class="m-0">{{ channel.topic }}</p>
