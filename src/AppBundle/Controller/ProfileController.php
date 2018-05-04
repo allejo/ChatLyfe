@@ -13,6 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 class ProfileController extends Controller
 {
     /**
+     * @Route("/", name="profile")
+     */
+    public function indexAction(Request $request)
+    {
+        return $this->render(':profile:index.html.twig');
+    }
+
+    /**
      * @Route("/delete", name="delete_user")
      */
     public function deleteUserAction(Request $request)
@@ -23,7 +31,7 @@ class ProfileController extends Controller
 
 		$deleteUserForm = $this->createFormBuilder([])
 			->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
-                'label' => 'Submit',
+                'label' => 'Delete',
             ])
 			->add('cancel', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
 				'label' => 'Cancel',
@@ -50,7 +58,7 @@ class ProfileController extends Controller
             return $this->redirectToRoute('fos_user_security_logout');
         }
 
-    	return $this->render(':profile:settings.html.twig', [
+    	return $this->render(':profile:delete.html.twig', [
             'delete_account' => $deleteUserForm->createView(),
         ]);
     }
