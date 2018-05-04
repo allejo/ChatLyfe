@@ -1,7 +1,9 @@
-.btn-primary--chatlyfe {
-    background-color: #fff;
-    border-color: #cccccc;
-    color: #333333;
-    font-size: 14px;
-    font-weight: 500;
+.btn-chatlyfe {
+    background-color: #3A3F55;
+    border-color: transparent;
+
+    &:hover {
+        background-color: #63C1C1;
+        border-color: transparent;
+    }
 }
